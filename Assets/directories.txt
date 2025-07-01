@@ -1,0 +1,13 @@
+/.hta                [33m (Status: 403)[0m [Size: 292]
+/.htaccess           [33m (Status: 403)[0m [Size: 297]
+/.htpasswd           [33m (Status: 403)[0m [Size: 297]
+/@                   [33m (Status: 400)[0m [Size: 1134]
+/0                   [32m (Status: 200)[0m [Size: 16597]
+/assets              [36m (Status: 301)[0m [Size: 315][34m [--> http://10.10.230.102/assets/][0m
+/home                [32m (Status: 200)[0m [Size: 16597]
+/index               [32m (Status: 200)[0m [Size: 16597]
+/index.php           [32m (Status: 200)[0m [Size: 16597]
+/lost+found          [33m (Status: 400)[0m [Size: 1134]
+/offline             [32m (Status: 200)[0m [Size: 70]
+/robots.txt          [32m (Status: 200)[0m [Size: 30]
+/server-status       [33m (Status: 403)[0m [Size: 301]

@@ -1,0 +1,11 @@
+# Nmap 7.94SVN scan initiated Sun Jun 29 11:51:04 2025 as: nmap -Pn -sV -T4 -v3 -p- -o port_scan.txt 10.10.230.102
+Nmap scan report for 10.10.230.102
+Host is up, received user-set (0.071s latency).
+Scanned at 2025-06-29 11:51:04 EDT for 41s
+Not shown: 65534 closed tcp ports (conn-refused)
+PORT   STATE SERVICE REASON  VERSION
+80/tcp open  http    syn-ack Apache httpd 2.4.18 ((Ubuntu))
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Jun 29 11:51:45 2025 -- 1 IP address (1 host up) scanned in 41.57 seconds
